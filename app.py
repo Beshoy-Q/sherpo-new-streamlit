@@ -25,8 +25,6 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 with st.sidebar:
-    st.subheader("Connection")
-    st.code(CHAT_ENDPOINT, language=None)
     if st.button("Clear conversation", use_container_width=True):
         st.session_state.messages = []
         st.rerun()
