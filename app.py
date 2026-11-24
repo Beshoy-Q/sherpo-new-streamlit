@@ -65,6 +65,14 @@ if user_message:
                 st.session_state.messages.append(
                     {"role": "assistant", "content": answer, "agents": agents}
                 )
+            except requests.HTTPError as exc:
+                detail = response.text
+                try:
+                    detail = response.json().get("detail", detail)
+                except ValueError:
+                    pass
+                st.error(f"Sherpo Academy API error ({response.status_code}): {detail}")
+                st.session_state.messages.pop()
             except requests.RequestException as exc:
                 error = f"Could not reach the Sherpo Academy API: {exc}"
                 st.error(error)
